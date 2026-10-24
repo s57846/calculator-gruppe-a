@@ -13,7 +13,7 @@ public class CalculatorImpl implements Calculator {
     @Override
     public double perform(Operation op) throws CalculatorException {
 
-        // sin und cos benötigen nur eine Zahl
+        // sin and cos only need one value
         if (op == Operation.sin)
             return Math.sin(pop());
         if (op == Operation.cos)
