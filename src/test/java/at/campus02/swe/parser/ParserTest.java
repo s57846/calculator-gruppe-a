@@ -94,6 +94,16 @@ public class ParserTest {
         verify(cal, times(2)).push(2.0);
         verify(cal).push(4.0);
         verify(cal).perform(Operation.dotproduct);
+    public void testParserSinXml() throws Exception {
+
+        Calculator cal = mock(Calculator.class);
+
+        Parser parser = new Parser(cal);
+        parser.parse(new File("src/test/resources/sin-zero.xml"));
+
+        verify(cal).push(0.0);
+        verify(cal).perform(Operation.sin);
+
         verifyNoMoreInteractions(cal);
     }
 
@@ -116,6 +126,19 @@ public class ParserTest {
         verify(cal).push(2.0);
         verify(cal).push(0.0);
         verify(cal).perform(Operation.dotproduct);
+        verifyNoMoreInteractions(cal);
+    }
+}
+    public void testParserCosXml() throws Exception {
+
+        Calculator cal = mock(Calculator.class);
+
+        Parser parser = new Parser(cal);
+        parser.parse(new File("src/test/resources/cos-zero.xml"));
+
+        verify(cal).push(0.0);
+        verify(cal).perform(Operation.cos);
+
         verifyNoMoreInteractions(cal);
     }
 }

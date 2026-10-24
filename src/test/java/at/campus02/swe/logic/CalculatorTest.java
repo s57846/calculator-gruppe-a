@@ -105,6 +105,66 @@ public class CalculatorTest {
 
     }
 
+    @Test
+    public void sinOfZero() throws CalculatorException {
+
+        Calculator calc = new CalculatorImpl();
+        calc.push(0);
+        double result = calc.perform(Operation.sin);
+
+        assertEquals(0.0, result, 1e-9);
+
+    }
+
+    @Test
+    public void sinOfHalfPi() throws CalculatorException {
+
+        Calculator calc = new CalculatorImpl();
+        calc.push(Math.PI / 2);
+        double result = calc.perform(Operation.sin);
+
+        assertEquals(1.0, result, 1e-9);
+
+    }
+
+    @Test
+    public void cosOfZero() throws CalculatorException {
+
+        Calculator calc = new CalculatorImpl();
+        calc.push(0);
+        double result = calc.perform(Operation.cos);
+
+        assertEquals(1.0, result, 1e-9);
+
+    }
+
+    @Test
+    public void cosOfPi() throws CalculatorException {
+
+        Calculator calc = new CalculatorImpl();
+        calc.push(Math.PI);
+        double result = calc.perform(Operation.cos);
+
+        assertEquals(-1.0, result, 1e-9);
+
+    }
+
+    @Test(expected = CalculatorException.class)
+    public void sinOnEmptyStack() throws CalculatorException {
+
+        Calculator calc = new CalculatorImpl();
+        calc.perform(Operation.sin);
+
+    }
+
+    @Test(expected = CalculatorException.class)
+    public void cosOnEmptyStack() throws CalculatorException {
+
+        Calculator calc = new CalculatorImpl();
+        calc.perform(Operation.cos);
+
+    }
+
 
 
 
