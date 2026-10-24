@@ -96,6 +96,7 @@ public class ParserTest {
         verify(cal).perform(Operation.dotproduct);
     }
 
+    @Test
     public void testParserSinXml() throws Exception {
 
         Calculator cal = mock(Calculator.class);
@@ -131,6 +132,7 @@ public class ParserTest {
         verifyNoMoreInteractions(cal);
     }
 
+    @Test
     public void testParserCosXml() throws Exception {
 
         Calculator cal = mock(Calculator.class);
