@@ -196,4 +196,89 @@ public class CalculatorTest {
         }
 
     }
+
+    @Test
+    public void testDotProductLengthOne() throws Exception {
+        Calculator calc = new CalculatorImpl();
+
+        // (3) · (4) = 12
+        calc.push(3);
+        calc.push(4);
+        calc.push(1);
+        double result = calc.perform(Operation.dotproduct);
+
+        assertEquals(12, result, 0);
+    }
+
+    @Test
+    public void testDotProductLengthTwo() throws Exception {
+        Calculator calc = new CalculatorImpl();
+
+        // (1, 3) · (2, 4) = 1*2 + 3*4 = 14
+        calc.push(1);
+        calc.push(3);
+        calc.push(2);
+        calc.push(4);
+        calc.push(2);
+        double result = calc.perform(Operation.dotproduct);
+
+        assertEquals(14, result, 0);
+    }
+
+    @Test
+    public void testDotProductLengthThree() throws Exception {
+        Calculator calc = new CalculatorImpl();
+
+        // (1, -2, 3) · (4, 5, 6) = 4 - 10 + 18 = 12
+        calc.push(1);
+        calc.push(-2);
+        calc.push(3);
+        calc.push(4);
+        calc.push(5);
+        calc.push(6);
+        calc.push(3);
+        double result = calc.perform(Operation.dotproduct);
+
+        assertEquals(12, result, 0);
+    }
+
+    @Test
+    public void testDotProductLengthZero() throws Exception {
+        assertDotProductFails("Invalid vector length", 0);
+    }
+
+    @Test
+    public void testDotProductNegativeLength() throws Exception {
+        assertDotProductFails("Invalid vector length", 1, 2, -1);
+    }
+
+    @Test
+    public void testDotProductFractionalLength() throws Exception {
+        assertDotProductFails("Invalid vector length", 1, 2, 3, 4, 1.5);
+    }
+
+    @Test
+    public void testDotProductNotEnoughValues() throws Exception {
+        // Länge 2 verlangt 4 Werte, es sind aber nur 3 vorhanden
+        assertDotProductFails("Not enough values", 1, 2, 3, 2);
+    }
+
+    @Test(expected = CalculatorException.class)
+    public void testDotProductEmptyStack() throws Exception {
+        Calculator calc = new CalculatorImpl();
+        calc.perform(Operation.dotproduct);
+    }
+
+    private void assertDotProductFails(String message, double... values) {
+        Calculator calc = new CalculatorImpl();
+        for (double v : values)
+            calc.push(v);
+        try {
+            calc.perform(Operation.dotproduct);
+
+            fail("Exception expected");
+        } catch (CalculatorException e) {
+            assertEquals(message, e.getMessage());
+        }
+    }
 }

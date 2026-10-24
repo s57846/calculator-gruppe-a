@@ -48,4 +48,40 @@ public class EndToEndTest {
         //execute: 9 / 0 -> CalculatorException
         parser.parse(new File("src/test/resources/e2e03.xml"));
     }
+
+    @Test
+    public void testDotProductLengthOne() throws Exception {
+        //setup
+        Calculator calc = new CalculatorImpl();
+        Parser parser = new Parser(calc);
+
+        //execute: (3) · (4) = 12
+        double result = parser.parse(new File("src/test/resources/dotproduct-length-1.xml"));
+
+        //verify
+        assertEquals(12, result, 0);
+    }
+
+    @Test
+    public void testDotProductLengthTwo() throws Exception {
+        //setup
+        Calculator calc = new CalculatorImpl();
+        Parser parser = new Parser(calc);
+
+        //execute: (1, 3) · (2, 4) = 1*2 + 3*4 = 14
+        double result = parser.parse(new File("src/test/resources/dotproduct-length-2.xml"));
+
+        //verify
+        assertEquals(14, result, 0);
+    }
+
+    @Test(expected = CalculatorException.class)
+    public void testDotProductInvalidLength() throws Exception {
+        //setup
+        Calculator calc = new CalculatorImpl();
+        Parser parser = new Parser(calc);
+
+        //execute: Länge 0 -> CalculatorException
+        parser.parse(new File("src/test/resources/dotproduct-invalid-length.xml"));
+    }
 }

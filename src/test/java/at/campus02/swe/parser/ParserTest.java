@@ -83,6 +83,17 @@ public class ParserTest {
     }
 
     @Test
+    public void testParserDotProductXml() throws Exception {
+        Calculator cal = mock(Calculator.class);
+
+        Parser parser = new Parser(cal);
+        parser.parse(new File("src/test/resources/dotproduct-length-2.xml"));
+
+        verify(cal).push(1.0);
+        verify(cal).push(3.0);
+        verify(cal, times(2)).push(2.0);
+        verify(cal).push(4.0);
+        verify(cal).perform(Operation.dotproduct);
     public void testParserSinXml() throws Exception {
 
         Calculator cal = mock(Calculator.class);
@@ -97,6 +108,27 @@ public class ParserTest {
     }
 
     @Test
+    public void testParserDotProductInvalidLengthXml() throws Exception {
+        Calculator cal = mock(Calculator.class);
+        when(cal.perform(Operation.dotproduct))
+                .thenThrow(new CalculatorException("Invalid vector length"));
+
+        Parser parser = new Parser(cal);
+        try {
+            parser.parse(new File("src/test/resources/dotproduct-invalid-length.xml"));
+
+            fail("Exception expected");
+        } catch (CalculatorException e) {
+            assertEquals("Invalid vector length", e.getMessage());
+        }
+
+        verify(cal).push(1.0);
+        verify(cal).push(2.0);
+        verify(cal).push(0.0);
+        verify(cal).perform(Operation.dotproduct);
+        verifyNoMoreInteractions(cal);
+    }
+}
     public void testParserCosXml() throws Exception {
 
         Calculator cal = mock(Calculator.class);

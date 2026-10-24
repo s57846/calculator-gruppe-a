@@ -80,6 +80,8 @@ public class Parser {
             return Operation.sub;
         else if ("%".equals(value))
             return Operation.mod;
+        else if ("dotproduct".equals(value))
+            return Operation.dotproduct;
         else if ("sin".equals(value))
             return Operation.sin;
         else if ("cos".equals(value))
